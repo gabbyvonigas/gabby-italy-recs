@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Italy — Travel Recommendations</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #f5f0e8;
+    --warm-white: #faf8f3;
+    --terracotta: #b85c38;
+    --dusty-rose: #c8937a;
+    --sage: #7a8c6e;
+    --charcoal: #2b2b2b;
+    --muted: #7a736a;
+    --gold: #c9a96e;
+    --border: #ddd5c4;
+  }
+
+  body {
+    background-color: var(--cream);
+    color: var(--charcoal);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* HEADER */
+  header {
+    background-color: var(--charcoal);
+    color: var(--cream);
+    text-align: center;
+    padding: 64px 24px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 60% 40%, rgba(201,169,110,0.12) 0%, transparent 70%);
+  }
+
+  .header-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(52px, 8vw, 88px);
+    font-style: italic;
+    line-height: 1;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+
+  header p {
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.5);
+  }
+
+  /* NAV TABS */
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    background: var(--warm-white);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  nav a {
+    display: block;
+    padding: 18px 28px;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    font-weight: 400;
+  }
+
+  nav a:hover {
+    color: var(--terracotta);
+    border-bottom-color: var(--terracotta);
+  }
+
+  /* MAIN LAYOUT */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 64px 24px 96px;
+  }
+
+  /* REGION SECTION */
+  .region {
+    margin-bottom: 80px;
+    scroll-margin-top: 64px;
+  }
+
+  .region-header {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .region-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(38px, 6vw, 60px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--charcoal);
+    line-height: 1;
+  }
+
+  .region-header .region-num {
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  /* CATEGORY */
+  .category {
+    margin-bottom: 40px;
+  }
+
+  .category-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--warm-white);
+    background: var(--terracotta);
+    padding: 6px 14px;
+    margin-bottom: 20px;
+  }
+
+  .category-label.drinks { background: var(--charcoal); }
+  .category-label.activities { background: var(--sage); }
+  .category-label.tips { background: var(--gold); color: var(--charcoal); }
+
+  /* CARDS */
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .card {
+    background: var(--warm-white);
+    padding: 22px 26px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: start;
+  }
+
+  .card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--charcoal);
+    line-height: 1.2;
+    margin-bottom: 5px;
+  }
+
+  .card-note {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .card-note em {
+    color: var(--terracotta);
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  .must-tag {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+    background: var(--dusty-rose);
+    color: white;
+    padding: 3px 8px;
+    white-space: nowrap;
+    margin-top: 4px;
+  }
+
+  /* NOTES BOX */
+  .notes-box {
+    background: var(--charcoal);
+    color: var(--cream);
+    padding: 32px 36px;
+    margin-top: 64px;
+  }
+
+  .notes-box h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-style: italic;
+    font-weight: 300;
+    margin-bottom: 18px;
+    color: var(--gold);
+  }
+
+  .notes-box p {
+    font-size: 15.5px;
+    line-height: 1.8;
+    color: rgba(245,240,232,0.85);
+    margin-bottom: 10px;
+  }
+
+  .notes-box p:last-child { margin-bottom: 0; }
+
+  .notes-box strong {
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 40px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 600px) {
+    nav a { padding: 16px 14px; font-size: 10px; letter-spacing: 1.5px; }
+    .card { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="header-eyebrow">Personal Travel Notes</p>
+  <h1>Italia</h1>
+  <p>Rome &nbsp;·&nbsp; Amalfi &nbsp;·&nbsp; Florence</p>
+</header>
+
+<nav>
+  <a href="#rome">Rome</a>
+  <a href="#amalfi">Amalfi</a>
+  <a href="#florence">Florence</a>
+  <a href="#notes">Notes</a>
+</nav>
+
+<main>
+
+  <!-- ROME -->
+  <section class="region" id="rome">
+    <div class="region-header">
+      <h2>Rome</h2>
+      <span class="region-num">01</span>
+    </div>
+
+    <div class="category">
+      <div class="category-label">Food</div>
+      <div class="cards">
+        <div class="card">
+          <div>
+            <div class="card-name">Roscoli</div>
+            <div class="card-note">A Roman institution. Salumeria, bakery, and restaurant all in one.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div>
+            <div class="card-name">Il Bacaro</div>
+            <div class="card-note">Dinner. The patio is dreamy.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div>
+            <div class="card-name">Baghetto Milky</div>
+            <div class="card-note">In the Jewish Ghetto. <em>Get the fried artichokes — life changing.</em></div>
+          </div>
+          <div><span class="must-tag">Must</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-label drinks">Drinks</div>
+      <div class="cards">
+        <div class="card">
+          <div>
+            <div class="card-name">Hotel Minerva Rooftop</div>
+            <div class="card-note">Drinks with an incredible view over Rome.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div>
+            <div class="card-name">Salotto 42</div>
+            <div class="card-note">Cute and aesthetic bar — perfect for happy hour.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div>
+            <div class="card-name">Caffe Propaganda</div>
+            <div class="card-note">Bar right across from the Colosseum.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div>
+            <div class="card-name">Hotel de Russie</div>
+            <div class="card-note">Get a drink in the outdoor bar at night. Stunning craft cocktails and exceptional wine.</div>
+          </div>
+          <div><span class="must-tag">Must</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-label activities">Activities</div>
+      <div class="cards">
+        <div class="card">
+          <div>
+            <div class="card-name">Monti Food Tour</div>
+            <div class="card-note">Monti means "mountains" — the neighborhood is one of Rome's most charming. A highly rated walking food tour is an amazing way to get to know the city, try local foods, and hopefully make a fun new friend in the guide.</div>
+          </div>
+          <div><span class="must-tag">Must</span></div>
+        </div>
+        <div class="card">
+          <div>
+            <div class="card-name">Campo de' Fiori Market</div>
+            <div class="card-note"><em>Buy an extra bag — or ship a box home. Always buy more.</em></div>
+          </div>
+        </div>
+        <div class="card">
+          <div>
+            <div class="card-name">The Jewish Ghetto</div>
+            <div class="card-note">One of Rome's oldest and most historically rich neighborhoods. Worth exploring on foot.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AMALFI -->
+  <section class="region" id="amalfi">
+    <div class="region-header">
+      <h2>Amalfi</h2>
+      <span class="region-num">02</span>
+    </div>
+
+    <div class="category">
+      <div class="category-label">Food &amp; Drink</div>
+      <div class="cards">
+        <div class="card">
+          <div>
+            <div class="card-name">Limoncello di Capri</div>
+            <div class="card-note">Pop into a limoncello factory if you can. This one in Positano let us go in the back to see how it's all made — so fun, and delicious. Look for similar spots all along the coast.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div>
+            <div class="card-name">Hotel San Pietro Restaurant</div>
+            <div class="card-note">Michelin-starred restaurant in Positano. The patio at sunset is as close to heaven as it gets.</div>
+          </div>
+          <div><span class="must-tag">Must</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-label activities">Activities</div>
+      <div class="cards">
+        <div class="card">
+          <div>
+            <div class="card-name">Day Trip (or overnight) to Positano</div>
+            <div class="card-note">Highly recommended — one night is worth it and dreamy.</div>
+          </div>
+          <div><span class="must-tag">Must</span></div>
+        </div>
+        <div class="card">
+          <div>
+            <div class="card-name">Ferry to Capri</div>
+            <div class="card-note">From the city of Amalfi — easy and scenic.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div>
+            <div class="card-name">Anacapri</div>
+            <div class="card-note">Drive or take the cable car up. A taxi is the most hilariously wild ride up and down the mountain — skip it if you get car sick. Buy all the beautiful painted knickknacks; you'll wish you bought more.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div>
+            <div class="card-name">Villa San Michele</div>
+            <div class="card-note">Stunning historic villa with heavenly views. Worth every minute.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div>
+            <div class="card-name">Capri Central</div>
+            <div class="card-note">Beautiful, great shopping, and so fun to wander.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div>
+            <div class="card-name">Private Boat Tour — Capri &amp; Positano</div>
+            <div class="card-note">An absolute must. Do not skip this.</div>
+          </div>
+          <div><span class="must-tag">Must</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLORENCE -->
+  <section class="region" id="florence">
+    <div class="region-header">
+      <h2>Florence</h2>
+      <span class="region-num">03</span>
+    </div>
+
+    <div class="category">
+      <div class="category-label">Food</div>
+      <div class="cards">
+        <div class="card">
+          <div>
+            <div class="card-name">Osteria Del Cinghiale Bianco</div>
+            <div class="card-note">Classic Florentine osteria — don't miss it.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div>
+            <div class="card-name">Il Santo Bevitore</div>
+            <div class="card-note">Dinner. Cute, intimate, and delicious.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-label drinks">Drinks &amp; Wine</div>
+      <div class="cards">
+        <div class="card">
+          <div>
+            <div class="card-name">Casa Emma — Winery Tour</div>
+            <div class="card-note">A Chianti Classico estate. Beautiful property and excellent wines.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div>
+            <div class="card-name">Montecchio — Winery Tour</div>
+            <div class="card-note"><em>SuperTuscan — absolutely delicious.</em></div>
+          </div>
+          <div><span class="must-tag">Must</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-label activities">Activities &amp; Sights</div>
+      <div class="cards">
+        <div class="card">
+          <div>
+            <div class="card-name">Hotel Palazzo Magnani Feroni — Rooftop</div>
+            <div class="card-note">Where we stayed — the rooftop terrace has an insane view of Florence. Many hotels offer this; seek it out wherever you stay.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div>
+            <div class="card-name">The Duomo</div>
+            <div class="card-note">Didn't go inside, but the exterior alone is breathtaking. Cute shops all around.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div>
+            <div class="card-name">Ponte Vecchio</div>
+            <div class="card-note">The famous bridge. Iconic for a reason.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOTES -->
+  <div class="notes-box" id="notes">
+    <h3>Good to Know</h3>
+    <p><strong>Trattoria</strong> — Casual, family-run, traditional home-style cooking. Usually no printed menu, lower prices, and deeply local. The soul of Italian dining.</p>
+    <p><strong>Osteria</strong> — Originally a wine-focused spot with simple food. Today it sits between trattoria and ristorante — relaxed atmosphere, regional dishes, quality wine list.</p>
+    <p><strong>Ristorante</strong> — The most formal of the three. Full printed menu, refined presentation, higher price point, often suited for a special occasion.</p>
+  </div>
+
+</main>
+
+<footer>
+  Italy &nbsp;·&nbsp; Personal Travel Notes
+</footer>
+
+</body>
+</html>
